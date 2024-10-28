@@ -4,10 +4,15 @@ namespace MovieApp.Web.Controllers
 {
     public class MoviesController : Controller
     {
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         //localhost:5000/movies/list
         public IActionResult List()
         {
-            return View();
+            return View("Movies");
         }
 
 

@@ -4,14 +4,23 @@ namespace MovieApp.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public string Index()
+        public IActionResult Index()
         {
-            return "Ana Sayfa";
+            string filbBasligi = "Mucize Uğur Böceği İle Kara Kedi";
+            string filmYonetmen = "Alex";
+            string filmAciklama = "Film Açıklaması";
+            string[] filmOyuncular = { "Marinette", "Adrien Agreste" };
+
+            ViewBag.FilmBasligi = filbBasligi;
+            ViewBag.FilmYönetmen = filmYonetmen;
+            ViewBag.FilmAciklamasi = filmAciklama;
+            ViewBag.Oyuncular = filmOyuncular;
+            return View();
         }
 
-        public string About()
+        public IActionResult About()
         {
-            return "hakkımızda";
+            return View();
         }
     }
 }
