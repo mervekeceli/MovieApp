@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MovieApp.Web.Model;
 
 namespace MovieApp.Web.Controllers
 {
@@ -11,11 +12,13 @@ namespace MovieApp.Web.Controllers
             string filmAciklama = "Film Açıklaması";
             string[] filmOyuncular = { "Marinette", "Adrien Agreste" };
 
-            ViewBag.FilmBasligi = filbBasligi;
-            ViewBag.FilmYönetmen = filmYonetmen;
-            ViewBag.FilmAciklamasi = filmAciklama;
-            ViewBag.Oyuncular = filmOyuncular;
-            return View();
+            var m = new Movie();
+            m.Title = filbBasligi;
+            m.Description = filmAciklama;
+            m.Director = filmYonetmen;
+            m.Players = filmOyuncular;
+
+            return View(m);
         }
 
         public IActionResult About()

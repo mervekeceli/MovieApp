@@ -30,6 +30,8 @@ namespace MovieApp.Web
 
             app.UseRouting();
 
+            app.UseStaticFiles(); // RESÝMLERÝ ÝGÖSTERMEYÝ AKTÝF HALE GETÝRME
+
             //localhost:5000
             //localhost:5000/movies
             app.UseEndpoints(endpoints =>
