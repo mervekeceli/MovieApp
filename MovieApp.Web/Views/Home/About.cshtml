@@ -1,1 +1,9 @@
-﻿<p>Home/About</p>
+﻿@model List<Genre>
+
+@section Menu {
+    @await Component.InvokeAsync("Genres")
+}
+
+
+<p>Home/About</p>
+

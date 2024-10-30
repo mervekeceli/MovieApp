@@ -21,17 +21,10 @@ namespace MovieApp.Web.Controllers
 
             };
 
-            var turler = new List<Genre>() { 
-                new Genre{Name="Macera"},
-                new Genre{Name="Komedi"},
-                new Genre{Name="Romantik"},
-                new Genre{Name="Bilim Kurgu"},
-            };
 
             var model = new MovieGenreViewModel()
             {
-                Movies = filmListesi,
-                Genres = turler
+                Movies = filmListesi
             };
 
             return View("Movies",model);

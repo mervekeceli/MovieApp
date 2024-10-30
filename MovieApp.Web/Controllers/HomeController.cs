@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MovieApp.Web.Model;
+using System.Collections.Generic;
 
 namespace MovieApp.Web.Controllers
 {

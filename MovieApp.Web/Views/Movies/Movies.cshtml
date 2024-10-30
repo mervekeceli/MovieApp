@@ -12,5 +12,6 @@
 
 
 @section Menu {
-    @await Html.PartialAsync("_Menu", Model.Genres) @* Partial View eklentisi *@
+    @* @await Html.PartialAsync("_Menu", Model.Genres) *@ @* Partial View eklentisi *@
+    @await Component.InvokeAsync("Genres")
 }
