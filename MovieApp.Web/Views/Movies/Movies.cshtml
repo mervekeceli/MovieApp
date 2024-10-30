@@ -1,34 +1,25 @@
 ﻿@model List<Movie>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head><title></title>
-        <link href="/css/style.css" rel="stylesheet" />
-    </head>
-    <body>  
 
 
-
-    <h1>Film Listesi</h1>
-    @foreach(var item in Model)
-    {
-        <div id="filmler">
-            <div class="film">
-                <p>@item.Title</p>
-                <div><img src="/img/@item.ImageUrl" />
-                </div>
-                <p>@item.Description</p>
-                <p>@item.Director</p>
-                <p>
-                    <ul>
-                        @foreach (var player in item.Players)
-                        {
-                            <li>@player</li>
-                        }
-                    </ul>
-                </p>
-                
+<h1>Film Listesi</h1>
+@foreach(var item in Model)
+{
+    <div id="filmler">
+        <div class="film">
+            <p>@item.Title</p>
+            <div><img src="/img/@item.ImageUrl" />
             </div>
+            <p>@item.Description</p>
+            <p>@item.Director</p>
+            <p>
+                <ul>
+                    @foreach (var player in item.Players)
+                    {
+                        <li>@player</li>
+                    }
+                </ul>
+            </p>
+                
         </div>
-    }
-    
-    </body>
-</html>
+    </div>
+}
