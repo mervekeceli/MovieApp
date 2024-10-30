@@ -11,12 +11,14 @@ namespace MovieApp.Web.Controllers
             string filmYonetmen = "Alex";
             string filmAciklama = "Film Açıklaması";
             string[] filmOyuncular = { "Marinette", "Adrien Agreste" };
+            string filmUrl = "1.jpg";
 
             var m = new Movie();
             m.Title = filbBasligi;
             m.Description = filmAciklama;
             m.Director = filmYonetmen;
             m.Players = filmOyuncular;
+            m.ImageUrl = filmUrl;
 
             return View(m);
         }

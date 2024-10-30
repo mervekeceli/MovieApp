@@ -7,17 +7,5 @@
 <h1>Film Listesi</h1>
 
 <div id="filmler">
-    <div class="film">
-        <p>@Model.Title</p>
-        <p>@Model.Description</p>
-        <p>@Model.Director</p>
-        <p>
-            <ul>
-                @foreach (var item in Model.Players)
-                {
-                    <li>@item</li>
-                }
-            </ul>
-        </p>
-    </div>
+    @await Html.PartialAsync("_Movie", Model)
 </div>
