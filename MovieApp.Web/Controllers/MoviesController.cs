@@ -20,7 +20,21 @@ namespace MovieApp.Web.Controllers
                 new Movie{Title = "Film 3", Description= "Aciklama 3", Director="Yönetmen 3", Players=new string[] {"Oyuncu1", "Oyuncu2", "Oyuncu3"}, ImageUrl = "3.jpg"}
 
             };
-            return View("Movies",filmListesi);
+
+            var turler = new List<Genre>() { 
+                new Genre{Name="Macera"},
+                new Genre{Name="Komedi"},
+                new Genre{Name="Romantik"},
+                new Genre{Name="Bilim Kurgu"},
+            };
+
+            var model = new MovieGenreViewModel()
+            {
+                Movies = filmListesi,
+                Genres = turler
+            };
+
+            return View("Movies",model);
         }
 
 
