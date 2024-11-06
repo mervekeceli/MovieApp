@@ -2,6 +2,7 @@
 using MovieApp.Web.Data;
 using MovieApp.Web.Model;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MovieApp.Web.Controllers
 {
@@ -13,14 +14,18 @@ namespace MovieApp.Web.Controllers
         }
 
         //localhost:5000/movies/list
-        public IActionResult List()
+        //localhost:5000/movies/list/1
+        public IActionResult List(int? id)
         {
-            
-
+            var movies = MovieRepository.Movies;
+            if (id != null)
+            {
+                movies = movies.Where(x=> x.GenreId == id).ToList();
+            }
 
             var model = new MoviesViewModel()
             {
-                Movies = MovieRepository.Movies
+                Movies = movies
             };
 
             return View("Movies",model);
