@@ -28,9 +28,9 @@ namespace MovieApp.Web.Controllers
 
 
         //localhost:5000/movies/details
-        public IActionResult Details()
+        public IActionResult Details(int id)
         {
-            return View();
+            return View(MovieRepository.GetById(id));
         }
     }
 }
