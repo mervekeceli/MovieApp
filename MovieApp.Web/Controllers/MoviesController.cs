@@ -8,6 +8,7 @@ namespace MovieApp.Web.Controllers
 {
     public class MoviesController : Controller
     {
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
@@ -15,6 +16,7 @@ namespace MovieApp.Web.Controllers
 
         //localhost:5000/movies/list
         //localhost:5000/movies/list/1
+        [HttpGet]
         public IActionResult List(int? id, string q)
         {
             var movies = MovieRepository.Movies;
@@ -39,9 +41,25 @@ namespace MovieApp.Web.Controllers
 
 
         //localhost:5000/movies/details
+        [HttpGet]
         public IActionResult Details(int id)
         {
             return View(MovieRepository.GetById(id));
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Movie movie)
+        {
+            //Model Binding
+            MovieRepository.Add(movie);
+
+            return RedirectToAction("List"); // Action'a yönlendirme
         }
     }
 }
