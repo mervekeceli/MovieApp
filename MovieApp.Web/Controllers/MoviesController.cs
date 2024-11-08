@@ -23,12 +23,12 @@ namespace MovieApp.Web.Controllers
             var movies = MovieRepository.Movies;
             if (id != null)
             {
-                movies = movies.Where(x=> x.GenreId == id).ToList();
+                movies = movies.Where(x => x.GenreId == id).ToList();
             }
 
             if (!string.IsNullOrEmpty(q))
             {
-                movies = movies.Where(m => m.Title.ToLower().Contains(q.ToLower()) || 
+                movies = movies.Where(m => m.Title.ToLower().Contains(q.ToLower()) ||
                 m.Description.ToLower().Contains(q.ToLower())).ToList();
             }
 
@@ -37,7 +37,7 @@ namespace MovieApp.Web.Controllers
                 Movies = movies
             };
 
-            return View("Movies",model);
+            return View("Movies", model);
         }
 
 
@@ -58,10 +58,14 @@ namespace MovieApp.Web.Controllers
         [HttpPost]
         public IActionResult Create(Movie movie)
         {
-            //Model Binding
-            MovieRepository.Add(movie);
-
-            return RedirectToAction("List"); // Action'a yönlendirme
+            if (ModelState.IsValid)
+            {
+                //Model Binding
+                MovieRepository.Add(movie);
+                return RedirectToAction("List"); // Action'a yönlendirme
+            }
+            ViewBag.Genres = new SelectList(GenreRepository.Genres, "GenreId", "Name");
+            return View();
         }
 
         [HttpGet]
@@ -72,12 +76,17 @@ namespace MovieApp.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Movie movie) 
+        public IActionResult Edit(Movie movie)
         {
-            MovieRepository.Edit(movie);
-            // /movies/details/1
-            return RedirectToAction("Details","Movies",new {@id = movie.MovieId});
-        }
 
+            if (ModelState.IsValid)
+            {
+                MovieRepository.Edit(movie);
+                // /movies/details/1
+                return RedirectToAction("Details", "Movies", new { @id = movie.MovieId });
+            }
+            ViewBag.Genres = new SelectList(GenreRepository.Genres, "GenreId", "Name");
+            return View(movie);
+        }
     }
 }

@@ -7,10 +7,12 @@
     <div class="form-group">
         <label asp-for="Title"></label>
         <input asp-for="Title" class="form-control"/>
+        <span asp-validation-for="Title" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Description"></label>
         <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Director"></label> 
@@ -19,12 +21,14 @@
     <div class="form-group">
         <label asp-for="ImageUrl"></label>
         <input asp-for="ImageUrl" class="form-control" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="GenreId"></label>
         <select asp-for="GenreId" asp-items="@ViewBag.Genres" class="form-control">
             <option selected disabled>Seçiniz</option>
         </select>
+        <span asp-validation-for="GenreId" class="text-danger"></span>
     </div>
     <button class="btn btn-success">Submit</button>
 </form>
