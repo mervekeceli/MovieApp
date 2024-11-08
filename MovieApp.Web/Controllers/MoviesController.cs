@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MovieApp.Web.Data;
 using MovieApp.Web.Model;
 using System.Collections.Generic;
@@ -50,6 +51,7 @@ namespace MovieApp.Web.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            ViewBag.Genres = new SelectList(GenreRepository.Genres, "GenreId", "Name");
             return View();
         }
 
@@ -65,6 +67,7 @@ namespace MovieApp.Web.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
+            ViewBag.Genres = new SelectList(GenreRepository.Genres, "GenreId", "Name");
             return View(MovieRepository.GetById(id));
         }
 

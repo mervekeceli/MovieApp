@@ -3,7 +3,7 @@
 
 <hr />
 
-<form method="post" asp-controller="Movies" asp-action="Create">
+<form method="post" asp-controller="Movies" asp-action="Edit">
     <input type="hidden" name="MovieId" value="@Model.MovieId"/>
     <div class="form-group">
         <label asp-for="Title"></label>
@@ -23,7 +23,9 @@
     </div>
     <div class="form-group">
         <label asp-for="GenreId"></label>
-        <input asp-for="GenreId" class="form-control" value="@Model.GenreId"/>
+        <select asp-for="GenreId" asp-items="@ViewBag.Genres" class="form-control">
+            <option selected disabled>Seçiniz</option>
+        </select>
     </div>
     <button class="btn btn-success">Submit</button>
 </form>
