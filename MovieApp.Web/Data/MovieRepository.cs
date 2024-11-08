@@ -35,5 +35,21 @@ namespace MovieApp.Web.Data
         {
             return _movies.FirstOrDefault(x => x.MovieId == id);
         }
+
+        public static void Edit(Movie m)
+        {
+            foreach (var movie in _movies) 
+            {
+                if(movie.MovieId == m.MovieId)
+                {
+                    movie.Title = m.Title;
+                    movie.Description = m.Description;
+                    movie.Director = m.Director;
+                    movie.ImageUrl = m.ImageUrl;
+                    movie.GenreId = m.GenreId;
+                    break;
+                }
+            }
+        }
     }
 }
