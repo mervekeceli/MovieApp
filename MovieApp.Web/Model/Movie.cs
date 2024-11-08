@@ -1,8 +1,12 @@
-﻿namespace MovieApp.Web.Model
+﻿using System.ComponentModel;
+
+namespace MovieApp.Web.Model
 {
     public class Movie
     {
         public int MovieId { get; set; }
+
+        [DisplayName("Başlık")]
         public string Title { get; set; }
         public string Description { get; set; }
         public string Director { get; set; }
