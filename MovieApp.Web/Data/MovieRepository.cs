@@ -51,5 +51,12 @@ namespace MovieApp.Web.Data
                 }
             }
         }
+
+        public static void Delete(int MovieId) 
+        {
+            var movie = GetById(MovieId);
+            if(movie != null)
+                _movies.Remove(movie);
+        }
     }
 }

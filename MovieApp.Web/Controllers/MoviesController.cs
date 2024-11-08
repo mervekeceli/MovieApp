@@ -88,5 +88,13 @@ namespace MovieApp.Web.Controllers
             ViewBag.Genres = new SelectList(GenreRepository.Genres, "GenreId", "Name");
             return View(movie);
         }
+
+        [HttpPost]
+        public IActionResult Delete(int MovieId, string Title)
+        {
+            MovieRepository.Delete(MovieId);
+            TempData["Message"] = $"{Title} isimli film silindi";
+            return RedirectToAction("List");
+        }
     }
 }
