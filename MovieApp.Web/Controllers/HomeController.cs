@@ -2,16 +2,23 @@
 using MovieApp.Web.Data;
 using MovieApp.Web.Model;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MovieApp.Web.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly MovieContext _context;
+
+        public HomeController(MovieContext context)
+        {
+            _context = context;
+        }
         public IActionResult Index()
         {
             var model = new HomePageViewModel
             {
-                PopularMovies = MovieRepository.Movies
+                PopularMovies = _context.Movies.ToList()
             };
 
             return View(model);
