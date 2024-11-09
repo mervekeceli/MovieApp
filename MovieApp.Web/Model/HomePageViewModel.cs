@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MovieApp.Web.Entity;
+using System.Collections.Generic;
 
 namespace MovieApp.Web.Model
 {

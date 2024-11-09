@@ -1,4 +1,5 @@
-﻿using MovieApp.Web.Model;
+﻿using MovieApp.Web.Entity;
+using MovieApp.Web.Model;
 using System.Collections.Generic;
 using System.Linq;
 
