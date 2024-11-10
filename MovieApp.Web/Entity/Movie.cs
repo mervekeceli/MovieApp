@@ -13,8 +13,9 @@ namespace MovieApp.Web.Entity
         [MaxLength]
         public string Description { get; set; }
         public string ImageUrl { get; set; }
+        public Genre Genre { get; set; } //navigation property
 
         [Required]
-        public int? GenreId { get; set; }
+        public int GenreId { get; set; } 
     }
 }
