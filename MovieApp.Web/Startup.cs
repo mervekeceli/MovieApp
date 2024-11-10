@@ -39,6 +39,7 @@ namespace MovieApp.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                DataSeeding.Seed(app); // test verilerinin eklenmesi ayarý
             }
 
             app.UseRouting();
