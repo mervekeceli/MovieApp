@@ -39,6 +39,23 @@ namespace MovieApp.Web.Data
                         new Movie{Title = "Film 6", Description= "Aciklama 6", ImageUrl = "3.jpg", Genre = genres[4]}
                     };
 
+            var users = new List<User>() {
+                new User(){UserName = "usera", Email="usera@gmail.com", Password="12345", ImageUrl="person1.jpg"},
+                new User(){UserName = "userb", Email="userb@gmail.com", Password="12345", ImageUrl="person2.jpg"},
+                new User(){UserName = "userc", Email="userc@gmail.com", Password="12345", ImageUrl="person2.jpg",
+                    Person= new Person(){
+                        Name="Personel 1",
+                        Biography = "Tanıtım 1"
+                    }
+                },
+                new User(){UserName = "userd", Email="userd@gmail.com", Password="12345", ImageUrl="person4.jpg",
+                    Person= new Person(){
+                        Name="Personel 2",
+                        Biography = "Tanıtım 2"
+                    }
+                }
+            };
+
             if (context.Database.GetPendingMigrations().Count() == 0)
             {
                 if (context.Genres.Count() == 0)
@@ -48,6 +65,10 @@ namespace MovieApp.Web.Data
                 if (context.Movies.Count() == 0)
                 {
                     context.Movies.AddRange(movies);
+                }
+                if (context.Users.Count() == 0) 
+                {
+                    context.Users.AddRange(users);
                 }
                 
                 context.SaveChanges();
