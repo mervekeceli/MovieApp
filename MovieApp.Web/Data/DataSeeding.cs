@@ -56,6 +56,34 @@ namespace MovieApp.Web.Data
                 }
             };
 
+            var people = new List<Person>() { 
+                new Person()
+                {
+                    Name = "Person 1",
+                    Biography = "Tanıtım 1",
+                    User= users[0]
+                },
+                new Person()
+                {
+                    Name = "Person 2",
+                    Biography = "Tanıtım 2",
+                    User= users[1]
+                }
+            };
+
+            var crews = new List<Crew>()
+            {
+                new Crew(){Movie=movies[0], Person = people[0], Job="Yönetmen"},
+                new Crew(){Movie=movies[0], Person = people[1], Job="Yönetmen Yardımcısı"}
+
+            };
+
+            var cast = new List<Cast>()
+            {
+                new Cast(){ Movie = movies[0], Person=people[0], Name="Oyuncu Adı 1", Caracter="Başrol 1"},
+                new Cast(){ Movie = movies[0], Person=people[0], Name="Oyuncu Adı 2", Caracter="Başrol 2"},
+            };
+
             if (context.Database.GetPendingMigrations().Count() == 0)
             {
                 if (context.Genres.Count() == 0)
@@ -70,7 +98,20 @@ namespace MovieApp.Web.Data
                 {
                     context.Users.AddRange(users);
                 }
-                
+                if (context.People.Count() == 0)
+                {
+                    context.People.AddRange(people);
+                }
+
+                if (context.Crews.Count() == 0)
+                {
+                    context.Crews.AddRange(crews);
+                }
+                if (context.Casts.Count() == 0)
+                {
+                    context.Casts.AddRange(cast);
+                }
+
                 context.SaveChanges();
             }
         }
