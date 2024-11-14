@@ -8,8 +8,6 @@ namespace MovieApp.Web.Entity
     {
         //[Key, DatabaseGenerated(DatabaseGeneratedOption.None)] -> otomatik artmasını engelleme (genelde Id için kullanılır)
         public int GenreId { get; set; }
-
-        [Required]
         public string Name { get; set; }
         public List<Movie> Movies { get; set; }
     }

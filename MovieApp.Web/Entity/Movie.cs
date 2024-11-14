@@ -7,8 +7,6 @@ namespace MovieApp.Web.Entity
     public class Movie
     { 
         public int MovieId { get; set; }
-
-        [Required] // Zorunlu alan
         public string Title { get; set; }
 
         [MaxLength]
