@@ -18,7 +18,7 @@ namespace MovieApp.Web.Data
 
             var genres = new List<Genre>() {
                             new Genre{
-                                    Name="Macera", Movies= 
+                                    Name="Macera", Movies=
                                     new List<Movie>(){
                                         new Movie{Title = "Yeni Macera Filmi 1", Description= "Aciklama 1", ImageUrl = "1.jpg"},
                                         new Movie{Title = "Yeni macera filmi 2", Description= "Aciklama 2", ImageUrl = "2.jpg"},
@@ -31,12 +31,12 @@ namespace MovieApp.Web.Data
                     };
 
             var movies = new List<Movie>() {
-                        new Movie{Title = "Film 1", Description= "Aciklama 1", ImageUrl = "1.jpg", Genre = genres[0]},
-                        new Movie{Title = "Film 2", Description= "Aciklama 2", ImageUrl = "2.jpg", Genre = genres[2]},
-                        new Movie{Title = "Film 3", Description= "Aciklama 3", ImageUrl = "3.jpg", Genre = genres[1]},
-                        new Movie{Title = "Film 4", Description= "Aciklama 4", ImageUrl = "1.jpg", Genre = genres[3]},
-                        new Movie{Title = "Film 5", Description= "Aciklama 5", ImageUrl = "2.jpg", Genre = genres[1]},
-                        new Movie{Title = "Film 6", Description= "Aciklama 6", ImageUrl = "3.jpg", Genre = genres[4]}
+                        new Movie{Title = "Film 1", Description= "Aciklama 1", ImageUrl = "1.jpg", Genres = new List<Genre>(){genres[0], new Genre() { Name="Yeni Tür"} } },
+                        new Movie{Title = "Film 2", Description= "Aciklama 2", ImageUrl = "2.jpg", Genres = new List<Genre>(){genres[1]} },
+                        new Movie{Title = "Film 3", Description= "Aciklama 3", ImageUrl = "3.jpg", Genres = new List<Genre>(){genres[2]} },
+                        new Movie{Title = "Film 4", Description= "Aciklama 4", ImageUrl = "1.jpg", Genres = new List<Genre>(){genres[0]} },
+                        new Movie{Title = "Film 5", Description= "Aciklama 5", ImageUrl = "2.jpg", Genres = new List<Genre>(){genres[0]} },
+                        new Movie{Title = "Film 6", Description= "Aciklama 6", ImageUrl = "3.jpg", Genres = new List<Genre>(){genres[0]} }
                     };
 
             var users = new List<User>() {
@@ -56,7 +56,7 @@ namespace MovieApp.Web.Data
                 }
             };
 
-            var people = new List<Person>() { 
+            var people = new List<Person>() {
                 new Person()
                 {
                     Name = "Person 1",
@@ -94,7 +94,7 @@ namespace MovieApp.Web.Data
                 {
                     context.Movies.AddRange(movies);
                 }
-                if (context.Users.Count() == 0) 
+                if (context.Users.Count() == 0)
                 {
                     context.Users.AddRange(users);
                 }

@@ -19,12 +19,12 @@
         <input asp-for="ImageUrl" class="form-control" />
         <span asp-validation-for="ImageUrl" class="text-danger"></span>
     </div>
-    <div class="form-group">
+    @* <div class="form-group">
         <label asp-for="GenreId"></label>
         <select asp-for="GenreId" asp-items="@ViewBag.Genres" class="form-control">
             <option selected disabled>Seçiniz</option>
         </select>
         <span asp-validation-for="GenreId" class="text-danger"></span>
-    </div>
+    </div> *@
     <button class="btn btn-success">Submit</button>
 </form>
