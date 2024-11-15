@@ -4,7 +4,7 @@ using LinqSamples.Data;
 //DB first için gerekli migration işlemi: 
 //dotnet ef dbcontext scaffold "Data Source=(localdb)\\MSSQLLocalDB;Database=Northwind;Integrated Security=SSPI;" "Microsoft.EntityFrameworkCore.SqlServer" --output-dir "Data" --context NorthwindContext
 #region Select Sorguları
-using (var db = new NorthwindContext())
+/*using (var db = new NorthwindContext())
 {
     
     //var products = db.Products.ToList();
@@ -20,7 +20,7 @@ using (var db = new NorthwindContext())
     //{
     //    console.writeline(product.productname + " -> " + product.category.categoryname);
     //}     
-}
+}*/
 #endregion
 
 #region Filtreleme Sorguları
@@ -137,4 +137,27 @@ using (var db = new NorthwindContext())
 }
 
 #endregion
+
+
+
+using(var db = new NorthwindContext())
+{
+    //var p1 = new Product() { ProductName = "Yen Ürün 2" };
+    //db.Products.Add(p1);
+    //db.SaveChanges();
+
+    var category = db.Categories.Where(c => c.CategoryName == "Beverages").FirstOrDefault();
+
+    var p1 = new Product() { ProductName = "Yeni ürün 3" };
+    var p2 = new Product() { ProductName = "Yeni ürün 4" };
+
+    category.Products.Add(p1);
+    category.Products.Add(p2);
+    db.SaveChanges();
+
+    Console.WriteLine("Veri eklendi");
+    Console.WriteLine(p1.ProductId);
+    Console.WriteLine(p2.ProductId);
+}
+
 Console.ReadLine();
