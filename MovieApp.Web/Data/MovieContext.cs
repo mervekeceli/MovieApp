@@ -30,7 +30,5 @@ namespace MovieApp.Web.Data
             modelBuilder.Entity<Genre>().Property(x => x.Name).IsRequired();
             modelBuilder.Entity<Genre>().Property(x => x.Name).HasMaxLength(500);
         }
-
-
     }
 }
