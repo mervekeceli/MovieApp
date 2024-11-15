@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieApp.Web", "MovieApp.Web\MovieApp.Web.csproj", "{62AF5080-6EDA-4BB8-BEB0-1534A1F7057C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqSamples", "LinqSamples\LinqSamples.csproj", "{AF247F63-9880-43D2-9634-E6A954DEEE79}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{62AF5080-6EDA-4BB8-BEB0-1534A1F7057C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62AF5080-6EDA-4BB8-BEB0-1534A1F7057C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62AF5080-6EDA-4BB8-BEB0-1534A1F7057C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF247F63-9880-43D2-9634-E6A954DEEE79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF247F63-9880-43D2-9634-E6A954DEEE79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF247F63-9880-43D2-9634-E6A954DEEE79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF247F63-9880-43D2-9634-E6A954DEEE79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
