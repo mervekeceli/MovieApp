@@ -163,31 +163,56 @@ using (var db = new NorthwindContext())
 
 
 #region LINQ sıralama ve hesaplama sorguları
-using(var db = new NorthwindContext())
+/*using(var db = new NorthwindContext())
 {
-    //var result = db.Products.Count();
-    //var result = db.Products.Count(i => i.UnitPrice > 10 && i.UnitPrice < 30);
+    var result = db.Products.Count();
+    var result = db.Products.Count(i => i.UnitPrice > 10 && i.UnitPrice < 30);
 
-    //var result = db.Products.Count(i => !i.Discontinued); //satışta olan ürünler
+    var result = db.Products.Count(i => !i.Discontinued); //satışta olan ürünler
 
-    //var result = db.Products.Min(p => p.UnitPrice);
-    //var result = db.Products.Max(p => p.UnitPrice);
+    var result = db.Products.Min(p => p.UnitPrice);
+    var result = db.Products.Max(p => p.UnitPrice);
 
-    //var result = db.Products.Where(x=>!x.Discontinued).Average(p => p.UnitPrice); // -> Ortalama fiyat satıştaki ürünlerin
+    var result = db.Products.Where(x=>!x.Discontinued).Average(p => p.UnitPrice); // -> Ortalama fiyat satıştaki ürünlerin
 
-    //var result = db.Products.Where(x => !x.Discontinued).Sum(p => p.UnitPrice); // ->satışta olan ürünlerin toplam diyat toplamı
-    //Console.WriteLine(result);
+    var result = db.Products.Where(x => !x.Discontinued).Sum(p => p.UnitPrice); // ->satışta olan ürünlerin toplam diyat toplamı
+    Console.WriteLine(result);
 
 
-    //var result = db.Products.OrderBy(p=>p.UnitPrice).ToList();
+    var result = db.Products.OrderBy(p=>p.UnitPrice).ToList();
     var result = db.Products.OrderByDescending(p => p.UnitPrice).ToList();
     foreach (var product in result)
     {
         Console.WriteLine(product.ProductName + ' ' + product.UnitPrice);
     }
     
-}
+}*/
 #endregion
 
+
+#region LINQ Update
+/*using(var db = new NorthwindContext())
+{
+    var product = db.Products.FirstOrDefault(p=>p.ProductId == 1);
+
+    if(product != null)
+    {
+        product.UnitsInStock += 30;
+
+        db.SaveChanges();
+        Console.WriteLine("Veri güncellendi!");
+    }
+}*/
+#endregion
+
+#region LINQ Delete
+/*using(var db = new NorthwindContext())
+{
+    var p1 = new Product() { ProductId = 80 };
+    db.Entry(p1).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+
+    db.SaveChanges();
+}*/
+#endregion
 
 Console.ReadLine();
