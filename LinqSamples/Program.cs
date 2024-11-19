@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using LinqSamples.Data;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 //DB first için gerekli migration işlemi: 
 //dotnet ef dbcontext scaffold "Data Source=(localdb)\\MSSQLLocalDB;Database=Northwind;Integrated Security=SSPI;" "Microsoft.EntityFrameworkCore.SqlServer" --output-dir "Data" --context NorthwindContext
@@ -216,7 +217,7 @@ using (var db = new NorthwindContext())
 }*/
 #endregion
 
-using (var db = new NorthwindContext())
+/*using (var db = new NorthwindContext())
 {
     //var products = db.Products.Include(c=>c.Category).Where(x=>x.Category.CategoryName == "Beverages").ToList();
     /*var products = db.Products
@@ -259,7 +260,7 @@ using (var db = new NorthwindContext())
 
     foreach (var product in products) {
         Console.WriteLine(product.ProductName + " -> " + product.companyName+ " -> " + product.contactName);
-    }*/
+    }
 
 
     //Müşterilerin verdiği sipariş toplamı ? 
@@ -293,6 +294,22 @@ using (var db = new NorthwindContext())
                 Console.WriteLine("Detay: " +product.ProductId + " -> " + product.Name + " -> " + product.Price);
             }
         }
+    }
+}*/
+
+
+//EF Core ile klasik SQL Sorgusu yazma
+using (var db = new NorthwindContext())
+{
+    //var sonuc = db.Database.ExecuteSqlRaw("delte from products Where ProductId = 81");
+    //var sonuc = db.Database.ExecuteSqlRaw("UPDATE Products SET UnitPrice=UnitPrice*1.2 WHERE CategoryId = 4");
+    //Console.WriteLine(sonuc);
+
+    var Query = 4;
+    var products = db.Products.FromSqlRaw($"Select * From Products where CategoryId={Query}");
+
+    foreach (var product in products) {
+        Console.WriteLine(product.ProductName);
     }
 }
 
