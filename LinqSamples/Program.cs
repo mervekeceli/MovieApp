@@ -253,12 +253,46 @@ using (var db = new NorthwindContext())
 
     //var products = (from p in db.Products  where p.UnitPrice > 10 select p).ToList();
 
-    var products = (from p in db.Products
+    /*var products = (from p in db.Products
                    join s in db.Suppliers on p.SupplierId equals s.SupplierId
                    select new {p.ProductName, contactName = s.ContactName, companyName = s.CompanyName}).ToList();
 
     foreach (var product in products) {
         Console.WriteLine(product.ProductName + " -> " + product.companyName+ " -> " + product.contactName);
+    }*/
+
+
+    //Müşterilerin verdiği sipariş toplamı ? 
+
+    var customers = db.Customers.Where(cus => cus.Orders.Any()).Select(cus => new
+    {
+        CustomerId = cus.CustomerId,
+        CustomerName = cus.ContactName,
+        OrderCount = cus.Orders.Count(),
+        Orders = cus.Orders.Select(order => new
+        {
+            OrderId = order.OrderId,
+            Total = order.OrderDetails.Sum(od => od.Quantity * od.UnitPrice),
+            Products = order.OrderDetails.Select(od=> new {
+                ProductId = od.ProductId,
+                Name = od.Product.ProductName,
+                Price = od.UnitPrice
+            }).ToList()
+        }).ToList()
+    }).ToList();
+
+    foreach(var customer in customers)
+    {
+        Console.WriteLine(customer.CustomerId + " " + customer.CustomerName + " -> " + customer.OrderCount );
+        Console.WriteLine("---------Sipariş Bilgileri---------");
+        foreach(var order in customer.Orders)
+        {
+            Console.WriteLine(order.OrderId + " -> " + order.Total);
+            foreach(var product in order.Products)
+            {
+                Console.WriteLine("Detay: " +product.ProductId + " -> " + product.Name + " -> " + product.Price);
+            }
+        }
     }
 }
 
