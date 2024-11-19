@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using LinqSamples.Data;
+using Microsoft.EntityFrameworkCore;
 
 //DB first için gerekli migration işlemi: 
 //dotnet ef dbcontext scaffold "Data Source=(localdb)\\MSSQLLocalDB;Database=Northwind;Integrated Security=SSPI;" "Microsoft.EntityFrameworkCore.SqlServer" --output-dir "Data" --context NorthwindContext
@@ -214,5 +215,51 @@ using (var db = new NorthwindContext())
     db.SaveChanges();
 }*/
 #endregion
+
+using (var db = new NorthwindContext())
+{
+    //var products = db.Products.Include(c=>c.Category).Where(x=>x.Category.CategoryName == "Beverages").ToList();
+    /*var products = db.Products
+        .Where(p => p.Category.CategoryName == "Beverages").Select(p=>new {
+            name = p.ProductName,
+            id=p.CategoryId,
+            category = p.Category.CategoryName
+        }).ToList();
+    foreach(var product in products)
+    {
+        Console.WriteLine(product.name + " -> " + product.category);
+    }*/
+
+    /*var cateories = db.Categories.Where(c=>c.Products.Count() == 0).ToList();
+    foreach(var cateory in cateories)
+    {
+        Console.WriteLine(cateory.CategoryName);
+    }*/
+
+    //Tedarikçi ve ürünler tablosu çoklu gösterim
+    /*var products = db.Products.Select(s => 
+    new {
+        companyName = s.Supplier.CompanyName,
+        contactName = s.Supplier.ContactName,
+        s.ProductName
+    }).ToList();
+
+    foreach(var product in products)
+    {
+        Console.WriteLine(product.ProductName + " - " + product.companyName + " - " + product.contactName);
+    }*/
+
+
+
+    //var products = (from p in db.Products  where p.UnitPrice > 10 select p).ToList();
+
+    var products = (from p in db.Products
+                   join s in db.Suppliers on p.SupplierId equals s.SupplierId
+                   select new {p.ProductName, contactName = s.ContactName, companyName = s.CompanyName}).ToList();
+
+    foreach (var product in products) {
+        Console.WriteLine(product.ProductName + " -> " + product.companyName+ " -> " + product.contactName);
+    }
+}
 
 Console.ReadLine();
