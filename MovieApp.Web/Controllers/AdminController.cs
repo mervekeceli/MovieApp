@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieApp.Web.Data;
+using MovieApp.Web.Entity;
 using MovieApp.Web.Model;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MovieApp.Web.Controllers
@@ -42,15 +44,16 @@ namespace MovieApp.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult MovieUpdate(AdminEditMovieViewModel model)
+        public IActionResult MovieUpdate(AdminEditMovieViewModel model, int[] GenreIds)
         {
-            var entity = _context.Movies.Find(model.MovieId);
+            var entity = _context.Movies.Include(g=>g.Genres).FirstOrDefault(m=> m.MovieId == model.MovieId);
             if(entity == null)
                 return NotFound();
 
             entity.Title = model.Title;
             entity.Description = model.Description;
             entity.ImageUrl = model.ImageUrl;
+            entity.Genres = GenreIds.Select(id => _context.Genres.FirstOrDefault(i => i.GenreId == id)).ToList();
 
             _context.SaveChanges();
 
