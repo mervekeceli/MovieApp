@@ -14,4 +14,11 @@ namespace MovieApp.Web.Model
         public string Name { get; set; }
         public int Count { get; set; } //Her türde kaç tane film bilgisi varsa onu göstermek için
     }
+
+    public class AdminEditGenreViewModel
+    {
+        public int GenreId { get; set; }
+        public string Name { get; set; }
+        public List<AdminMovieViewModel> Movies { get; set; } //Her türde kaç tane film bilgisi varsa onu göstermek için
+    }
 }

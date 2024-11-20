@@ -1,0 +1,41 @@
+﻿@model AdminEditGenreViewModel
+
+<h1>Edit Genre</h1>
+<hr />
+<form action="/" method="post">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="from-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control"/>
+            </div>
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+
+        <div class="col-md-9">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th style="width:30px;" scope="col">#</th>
+                        <th style="width:100px;" scope="col">Image</th>
+                        <th scope="col">Title</th>
+                        <th style="width:160px;" scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var movie in Model.Movies){
+                        <tr>
+                            <th scope="row">@movie.MovieId</th>
+                            <td><img src="~/img/@movie.ImageUrl" width="80"/></td>
+                            <td>@movie.Title</td>
+                            <td>
+                                <a href="/admin/movieUpdate/@movie.MovieId" class="btn btn-warning btn-sm">Update</a>
+                                <a href="/admin/" class="btn btn-danger btn-sm">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>    
+</form>
