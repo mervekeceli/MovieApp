@@ -6,7 +6,7 @@
             <th style="width: 30px" scope="col">#</th>
             <th style="width: 100px" scope="col">Image</th>
             <th scope="col">Title</th>
-            <th style="width: 70px" scope="col">Genres</th>
+            <th style="width: 300px" scope="col">Genres</th>
             <th style="width: 160px" scope="col"></th>
         </tr>
     </thead>
@@ -28,7 +28,11 @@
                 </td>
                 <td>
                     <a href="/admin/movieUpdate/@movie.MovieId" class="btn btn-primary btn-sm">Update</a>
-                    <a href="/admin/" class="btn btn-danger btn-sm">Delete</a>
+
+                    <form action="/admin/movieDelete" method="post" style="display: inline;">
+                        <input type="hidden" name="movieId" value="@movie.MovieId" />
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
                 </td>
             </tr>
         }
