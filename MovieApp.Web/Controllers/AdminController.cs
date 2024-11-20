@@ -157,5 +157,30 @@ namespace MovieApp.Web.Controllers
             }
             return RedirectToAction("GenreList");
         }
+
+        public IActionResult MovieCreate()
+        {
+            ViewBag.Genres = _context.Genres.ToList();
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult MovieCreate(Movie m, int[] genreIds)
+        {
+            if(ModelState.IsValid)
+            {
+                m.Genres = new List<Genre>();
+                foreach(var id in genreIds)
+                {
+                    m.Genres.Add(_context.Genres.FirstOrDefault(g=>g.GenreId == id));
+                }
+
+                _context.Movies.Add(m);
+                _context.SaveChanges();
+                return RedirectToAction("MovieList", "Admin");
+            }
+            ViewBag.Genres = _context.Genres.ToList();
+            return View();
+        }
     }
 }
