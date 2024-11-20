@@ -33,7 +33,7 @@ namespace MovieApp.Web.Controllers
                 Description = m.Description,
                 ImageUrl = m.ImageUrl,
                 SelectedGenres = m.Genres
-            }).FirstOrDefault(m=>m.MovieId == id);
+            }).FirstOrDefault(m => m.MovieId == id);
 
             ViewBag.Genres = _context.Genres.ToList();
 
@@ -46,8 +46,8 @@ namespace MovieApp.Web.Controllers
         [HttpPost]
         public IActionResult MovieUpdate(AdminEditMovieViewModel model, int[] GenreIds)
         {
-            var entity = _context.Movies.Include(g=>g.Genres).FirstOrDefault(m=> m.MovieId == model.MovieId);
-            if(entity == null)
+            var entity = _context.Movies.Include(g => g.Genres).FirstOrDefault(m => m.MovieId == model.MovieId);
+            if (entity == null)
                 return NotFound();
 
             entity.Title = model.Title;
@@ -74,6 +74,19 @@ namespace MovieApp.Web.Controllers
                 //    Genres = x.Genres.ToList()
                 //})
                 .ToList()
+            });
+        }
+
+        public IActionResult GenreList()
+        {
+            return View(new AdminGenresViewModel
+            {
+                Genres = _context.Genres.Select(g=> new AdminGenreViewModel
+                {
+                    GenreId = g.GenreId,
+                    Name = g.Name,
+                    Count = g.Movies.Count
+                }).ToList()
             });
         }
     }
