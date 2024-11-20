@@ -90,6 +90,7 @@ namespace MovieApp.Web.Controllers
             });
         }
 
+        [HttpGet]
         public IActionResult GenreUpdate(int? id)
         {
             if(id == null) 
@@ -113,6 +114,23 @@ namespace MovieApp.Web.Controllers
                 return NotFound();
 
             return View(entity);
+        }
+
+        [HttpPost]
+        public IActionResult GenreUpdate(AdminEditGenreViewModel model, int[] MovieIds)
+        {
+            var entity = _context.Genres.Include("Movies").FirstOrDefault(x=>x.GenreId==model.GenreId);
+            if(entity == null)
+                return NotFound();
+
+            entity.Name = model.Name;
+            foreach(var id in MovieIds)
+            {
+                entity.Movies.Remove(entity.Movies.FirstOrDefault(m=>m.MovieId == id));
+            }
+            _context.SaveChanges();
+
+            return RedirectToAction("GenreList");
         }
     }
 }

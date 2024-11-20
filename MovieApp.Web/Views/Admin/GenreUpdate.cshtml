@@ -2,9 +2,10 @@
 
 <h1>Edit Genre</h1>
 <hr />
-<form action="/" method="post">
+<form asp-controller="Admin" asp-action="GenreUpdate" method="post">
     <div class="row">
         <div class="col-md-3">
+            <input type="hidden" name="GenreId" value="@Model.GenreId"/>
             <div class="from-group">
                 <label asp-for="Name"></label>
                 <input asp-for="Name" class="form-control"/>
@@ -16,6 +17,7 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
+                        <th style="width:20px;" scope="col">Remove</thstyle>
                         <th style="width:30px;" scope="col">#</th>
                         <th style="width:100px;" scope="col">Image</th>
                         <th scope="col">Title</th>
@@ -25,6 +27,9 @@
                 <tbody>
                     @foreach(var movie in Model.Movies){
                         <tr>
+                            <th scope="row">
+                                <input class="form-check-input" type="checkbox" name="MovieIds" value="@movie.MovieId"/>
+                            </th>
                             <th scope="row">@movie.MovieId</th>
                             <td><img src="~/img/@movie.ImageUrl" width="80"/></td>
                             <td>@movie.Title</td>
