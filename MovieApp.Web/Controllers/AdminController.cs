@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MovieApp.Web.Controllers
 {
@@ -35,7 +36,7 @@ namespace MovieApp.Web.Controllers
                 Title = m.Title,
                 Description = m.Description,
                 ImageUrl = m.ImageUrl,
-                SelectedGenres = m.Genres
+                GenreIds = m.Genres.Select(x => x.GenreId).ToArray()
             }).FirstOrDefault(m => m.MovieId == id);
 
             ViewBag.Genres = _context.Genres.ToList();
@@ -47,32 +48,36 @@ namespace MovieApp.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult MovieUpdate(AdminEditMovieViewModel model, int[] GenreIds, IFormFile file)
+        public async Task<IActionResult> MovieUpdate(AdminEditMovieViewModel model, int[] GenreIds, IFormFile file)
         {
-            var entity = _context.Movies.Include(g => g.Genres).FirstOrDefault(m => m.MovieId == model.MovieId);
-            if (entity == null)
-                return NotFound();
-
-            entity.Title = model.Title;
-            entity.Description = model.Description;
-
-            if (file != null)
+            if (ModelState.IsValid)
             {
-                var extension = Path.GetExtension(file.FileName);
-                var fileName = string.Format($"{Guid.NewGuid()}{extension}");
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img", fileName);
+                var entity = _context.Movies.Include(g => g.Genres).FirstOrDefault(m => m.MovieId == model.MovieId);
+                if (entity == null)
+                    return NotFound();
 
-                entity.ImageUrl = fileName;
-                using(var stream = new FileStream(path, FileMode.Create))
+                entity.Title = model.Title;
+                entity.Description = model.Description;
+
+                if (file != null)
                 {
-                    file.CopyToAsync(stream);
+                    var extension = Path.GetExtension(file.FileName);
+                    var fileName = string.Format($"{Guid.NewGuid()}{extension}");
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img", fileName);
+
+                    entity.ImageUrl = fileName;
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
                 }
+                entity.Genres = GenreIds.Select(id => _context.Genres.FirstOrDefault(i => i.GenreId == id)).ToList();
+                _context.SaveChanges();
+
+                return RedirectToAction("MovieList");
             }
-            entity.Genres = GenreIds.Select(id => _context.Genres.FirstOrDefault(i => i.GenreId == id)).ToList();
-
-            _context.SaveChanges();
-
-            return RedirectToAction("MovieList");
+            ViewBag.Genres = _context.Genres.ToList();
+            return View(model);
         }
 
         public IActionResult MovieList()
@@ -108,7 +113,7 @@ namespace MovieApp.Web.Controllers
         {
             return View(new AdminGenresViewModel
             {
-                Genres = _context.Genres.Select(g=> new AdminGenreViewModel
+                Genres = _context.Genres.Select(g => new AdminGenreViewModel
                 {
                     GenreId = g.GenreId,
                     Name = g.Name,
@@ -120,24 +125,24 @@ namespace MovieApp.Web.Controllers
         [HttpGet]
         public IActionResult GenreUpdate(int? id)
         {
-            if(id == null) 
+            if (id == null)
                 return NotFound();
 
             var entity = _context.Genres
-                .Select(g=> new AdminEditGenreViewModel
+                .Select(g => new AdminEditGenreViewModel
                 {
-                    GenreId =g.GenreId,
+                    GenreId = g.GenreId,
                     Name = g.Name,
-                    Movies = g.Movies.Select(x=> new AdminMovieViewModel
+                    Movies = g.Movies.Select(x => new AdminMovieViewModel
                     {
                         MovieId = x.MovieId,
                         Title = x.Title,
                         ImageUrl = x.ImageUrl,
                     }).ToList()
                 })
-                .FirstOrDefault(g => g.GenreId ==id);
+                .FirstOrDefault(g => g.GenreId == id);
 
-            if(entity == null)
+            if (entity == null)
                 return NotFound();
 
             return View(entity);
@@ -146,14 +151,14 @@ namespace MovieApp.Web.Controllers
         [HttpPost]
         public IActionResult GenreUpdate(AdminEditGenreViewModel model, int[] MovieIds)
         {
-            var entity = _context.Genres.Include("Movies").FirstOrDefault(x=>x.GenreId==model.GenreId);
-            if(entity == null)
+            var entity = _context.Genres.Include("Movies").FirstOrDefault(x => x.GenreId == model.GenreId);
+            if (entity == null)
                 return NotFound();
 
             entity.Name = model.Name;
-            foreach(var id in MovieIds)
+            foreach (var id in MovieIds)
             {
-                entity.Movies.Remove(entity.Movies.FirstOrDefault(m=>m.MovieId == id));
+                entity.Movies.Remove(entity.Movies.FirstOrDefault(m => m.MovieId == id));
             }
             _context.SaveChanges();
 
@@ -165,7 +170,7 @@ namespace MovieApp.Web.Controllers
         {
             var entity = _context.Genres.Find(genreId);
 
-            if(entity!= null)
+            if (entity != null)
             {
                 _context.Genres.Remove(entity);
                 _context.SaveChanges();
@@ -196,9 +201,9 @@ namespace MovieApp.Web.Controllers
                     ImageUrl = "no-image.png"
                 };
 
-                foreach(var id in model.GenreIds)
+                foreach (var id in model.GenreIds)
                 {
-                    entity.Genres.Add(_context.Genres.FirstOrDefault(g=>g.GenreId == id));
+                    entity.Genres.Add(_context.Genres.FirstOrDefault(g => g.GenreId == id));
                 }
 
                 _context.Movies.Add(entity);
