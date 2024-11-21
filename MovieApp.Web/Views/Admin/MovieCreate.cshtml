@@ -1,11 +1,11 @@
-﻿@model AdminEditMovieViewModel
+﻿@model AdminCreateMovieViewModel
 <h1>Create Movie</h1>
 
 <hr />
 <form method="post" asp-controller="Admin" asp-action="MovieCreate">
     <div class="row">
         <div class="col-md-8">
-
+            <div asp-validation-summary="All"></div>
             <div class="form-group">
                 <label asp-for="Title"></label>
                 <input asp-for="Title" class="form-control"/>

@@ -5,7 +5,11 @@ using System.Collections.Generic;
 namespace MovieApp.Web.Entity
 {
     public class Movie
-    { 
+    {
+        public Movie()
+        {
+            Genres = new List<Genre>();
+        }
         public int MovieId { get; set; }
         public string Title { get; set; }
 

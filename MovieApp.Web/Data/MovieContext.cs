@@ -22,7 +22,7 @@ namespace MovieApp.Web.Data
         //    optionsBuilder.UseSqlite("Data Source=movies.db");
         //}
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder) //Fluent Api
         {
             modelBuilder.Entity<Movie>().Property(x => x.Title).IsRequired();
             modelBuilder.Entity<Movie>().Property(x => x.Title).HasMaxLength(500);
