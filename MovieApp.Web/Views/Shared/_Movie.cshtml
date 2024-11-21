@@ -11,13 +11,6 @@
                 <h5 class="card-title">@Model.Title</h5>
                 <div>
                     <a class="btn btn-primary" asp-controller="Movies" asp-action="Details" asp-route-id="@Model.MovieId">details</a>
-                    <a class="btn btn-success" asp-controller="Movies" asp-action="Edit" asp-route-id="@Model.MovieId">edit</a>
-
-                    <form asp-controller="Movies" asp-action="Delete" method="post" style="display: inline;">
-                        <input type="hidden" name="MovieId" value="@Model.MovieId"/>
-                        <input type="hidden" name="Title" value="@Model.Title"/>
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
                 </div>
             </div>
         </div>

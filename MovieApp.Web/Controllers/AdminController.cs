@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieApp.Web.Data;
 using MovieApp.Web.Entity;
 using MovieApp.Web.Model;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace MovieApp.Web.Controllers
@@ -44,7 +47,7 @@ namespace MovieApp.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult MovieUpdate(AdminEditMovieViewModel model, int[] GenreIds)
+        public IActionResult MovieUpdate(AdminEditMovieViewModel model, int[] GenreIds, IFormFile file)
         {
             var entity = _context.Movies.Include(g => g.Genres).FirstOrDefault(m => m.MovieId == model.MovieId);
             if (entity == null)
@@ -52,7 +55,19 @@ namespace MovieApp.Web.Controllers
 
             entity.Title = model.Title;
             entity.Description = model.Description;
-            entity.ImageUrl = model.ImageUrl;
+
+            if (file != null)
+            {
+                var extension = Path.GetExtension(file.FileName);
+                var fileName = string.Format($"{Guid.NewGuid()}{extension}");
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img", fileName);
+
+                entity.ImageUrl = fileName;
+                using(var stream = new FileStream(path, FileMode.Create))
+                {
+                    file.CopyToAsync(stream);
+                }
+            }
             entity.Genres = GenreIds.Select(id => _context.Genres.FirstOrDefault(i => i.GenreId == id)).ToList();
 
             _context.SaveChanges();
