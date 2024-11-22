@@ -192,18 +192,22 @@ namespace MovieApp.Web.Controllers
         [HttpPost]
         public IActionResult GenreUpdate(AdminEditGenreViewModel model, int[] MovieIds)
         {
-            var entity = _context.Genres.Include("Movies").FirstOrDefault(x => x.GenreId == model.GenreId);
-            if (entity == null)
-                return NotFound();
-
-            entity.Name = model.Name;
-            foreach (var id in MovieIds)
+            if (ModelState.IsValid)
             {
-                entity.Movies.Remove(entity.Movies.FirstOrDefault(m => m.MovieId == id));
-            }
-            _context.SaveChanges();
+                var entity = _context.Genres.Include("Movies").FirstOrDefault(x => x.GenreId == model.GenreId);
+                if (entity == null)
+                    return NotFound();
 
-            return RedirectToAction("GenreList");
+                entity.Name = model.Name;
+                foreach (var id in MovieIds)
+                {
+                    entity.Movies.Remove(entity.Movies.FirstOrDefault(m => m.MovieId == id));
+                }
+                _context.SaveChanges();
+
+                return RedirectToAction("GenreList");
+            }
+            return View(model);
         }
 
         [HttpPost]
@@ -222,7 +226,7 @@ namespace MovieApp.Web.Controllers
         [HttpPost]
         public IActionResult GenreCreate(AdminGenresViewModel model)
         {
-            if(model.Name != null && model.Name.Length < 3)
+            if (model.Name != null && model.Name.Length < 3)
             {
                 ModelState.AddModelError("Name", "Tür adı minumum 3 karakterli olmalıdır!");
             }

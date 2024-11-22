@@ -21,6 +21,8 @@ namespace MovieApp.Web.Model
     public class AdminEditGenreViewModel
     {
         public int GenreId { get; set; }
+
+        [Required(ErrorMessage ="Tür bilgisi girmelisiniz!")]
         public string Name { get; set; }
         public List<AdminMovieViewModel> Movies { get; set; } //Her türde kaç tane film bilgisi varsa onu göstermek için
     }
