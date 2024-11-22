@@ -1,6 +1,7 @@
 ﻿@model UserModel
 
 <h1>CreateUser</h1>
+<hr />
 
 <form asp-controller ="User" asp-action="CreateUser" method="post">
     <div asp-validation-summary="All"></div>
@@ -44,3 +45,8 @@
     </div>  
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+@section scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.js"></script>
+}
