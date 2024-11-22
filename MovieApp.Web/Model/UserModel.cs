@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MovieApp.Web.Validators;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace MovieApp.Web.Model
 {
@@ -14,6 +16,7 @@ namespace MovieApp.Web.Model
         [StringLength(15, ErrorMessage ="{0} karakter uzunluğu {2}-{1} arasında olmalıdır!", MinimumLength =3)]
         public string Name { get; set; }
 
+        [EmailProviders]
         [Required]
         [EmailAddress]
         public string Email { get; set; }
@@ -30,7 +33,9 @@ namespace MovieApp.Web.Model
         [Url]
         public string Url { get; set; }
 
-        [Range(1900,2010)]
-        public int BirthYear { get; set; }
+        [BirthDate(ErrorMessage ="Doğum tarihiniz şimdiki tarih yada sonraki tarih olamaz!")]
+        [DataType(DataType.Date)]
+        [Display(Name ="Birth Date")]
+        public DateTime BirthDate { get; set; }
     }
 }
