@@ -5,11 +5,11 @@
 }
 
 <h1>Film Listesi</h1>
+<hr />
 
-<div id="filmler">
-    @foreach(var movie in Model.PopularMovies)
+<div class="row row-cols-4 row-cols-md-3">
+    @foreach (var movie in Model.PopularMovies)
     {
         @await Html.PartialAsync("_Movie", movie)
     }
-    
 </div>
