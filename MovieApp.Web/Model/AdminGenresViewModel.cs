@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Security;
 
 namespace MovieApp.Web.Model
 {
     public class AdminGenresViewModel
     {
+        [Required(ErrorMessage ="Tür bilgisi girmelisiniz!")]
+        public string Name { get; set; }
         public List<AdminGenreViewModel> Genres { get; set; }
     }
 

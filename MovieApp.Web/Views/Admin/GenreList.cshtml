@@ -1,28 +1,45 @@
 ﻿@model AdminGenresViewModel
+<h1>Admin Genres</h1>
+<div class="row">
+    <div class="col-md-4">
+        <div asp-validation-summary="All"></div>
+        <form asp-controller="Admin" asp-action="GenreCreate">
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control"/>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <div class="col-md-8">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th style="width:30px;" scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th style="width:70px;" scope="col">Count</th>
+                    <th style="width:160px;" scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var genre in Model.Genres)
+                {
+                    <tr>
+                        <th scope="row">@genre.GenreId</th>
+                        <td>@genre.Name</td>
+                        <td>@genre.Count</td>
+                        <td>
+                            <a href="/admin/genreUpdate/@genre.GenreId" class="btn btn-warning btn-sm">Update</a>
+                            <form action="/admin/genreDelete" method="post" style="display: inline;">
+                                <input type="hidden" name="genreId" value="@genre.GenreId" />
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th style="width:30px;" scope="col">#</th>
-            <th scope="col">Name</th>
-            <th style="width:70px;" scope="col">Count</th>
-            <th style="width:160px;" scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var genre in Model.Genres){
-            <tr>
-                <th scope="row">@genre.GenreId</th>
-                <td>@genre.Name</td>
-                <td>@genre.Count</td>
-                <td>
-                    <a href="/admin/genreUpdate/@genre.GenreId" class="btn btn-warning btn-sm">Update</a>
-                    <form action="/admin/genreDelete" method="post" style="display: inline;">
-                        <input type="hidden" name="genreId" value="@genre.GenreId"/>
-                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                    </form>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>

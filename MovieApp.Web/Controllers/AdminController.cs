@@ -109,9 +109,50 @@ namespace MovieApp.Web.Controllers
             return RedirectToAction("MovieList");
         }
 
+        public IActionResult MovieCreate()
+        {
+            ViewBag.Genres = _context.Genres.ToList();
+            return View(new AdminCreateMovieViewModel());
+        }
+
+        [HttpPost]
+        public IActionResult MovieCreate(AdminCreateMovieViewModel model)
+        {
+            //if (model.GenreIds == null)
+            //{
+            //    ModelState.AddModelError("GenreIds", "En az bir tür seçmelisiniz!");
+            //}
+
+            if (ModelState.IsValid)
+            {
+                var entity = new Movie
+                {
+                    Title = model.Title,
+                    Description = model.Description,
+                    ImageUrl = "no-image.png"
+                };
+
+                foreach (var id in model.GenreIds)
+                {
+                    entity.Genres.Add(_context.Genres.FirstOrDefault(g => g.GenreId == id));
+                }
+
+                _context.Movies.Add(entity);
+                _context.SaveChanges();
+                return RedirectToAction("MovieList", "Admin");
+            }
+            ViewBag.Genres = _context.Genres.ToList();
+            return View(model);
+        }
+
         public IActionResult GenreList()
         {
-            return View(new AdminGenresViewModel
+            return View(GetGenres());
+        }
+
+        private AdminGenresViewModel GetGenres()
+        {
+            return new AdminGenresViewModel
             {
                 Genres = _context.Genres.Select(g => new AdminGenreViewModel
                 {
@@ -119,7 +160,7 @@ namespace MovieApp.Web.Controllers
                     Name = g.Name,
                     Count = g.Movies.Count
                 }).ToList()
-            });
+            };
         }
 
         [HttpGet]
@@ -178,40 +219,24 @@ namespace MovieApp.Web.Controllers
             return RedirectToAction("GenreList");
         }
 
-        public IActionResult MovieCreate()
-        {
-            ViewBag.Genres = _context.Genres.ToList();
-            return View(new AdminCreateMovieViewModel());
-        }
-
         [HttpPost]
-        public IActionResult MovieCreate(AdminCreateMovieViewModel model)
+        public IActionResult GenreCreate(AdminGenresViewModel model)
         {
-            //if (model.GenreIds == null)
-            //{
-            //    ModelState.AddModelError("GenreIds", "En az bir tür seçmelisiniz!");
-            //}
-
+            if(model.Name != null && model.Name.Length < 3)
+            {
+                ModelState.AddModelError("Name", "Tür adı minumum 3 karakterli olmalıdır!");
+            }
             if (ModelState.IsValid)
             {
-                var entity = new Movie
+                _context.Genres.Add(new Genre
                 {
-                    Title = model.Title,
-                    Description = model.Description,
-                    ImageUrl = "no-image.png"
-                };
-
-                foreach (var id in model.GenreIds)
-                {
-                    entity.Genres.Add(_context.Genres.FirstOrDefault(g => g.GenreId == id));
-                }
-
-                _context.Movies.Add(entity);
+                    Name = model.Name,
+                });
                 _context.SaveChanges();
-                return RedirectToAction("MovieList", "Admin");
+
+                return RedirectToAction("GenreList");
             }
-            ViewBag.Genres = _context.Genres.ToList();
-            return View(model);
+            return View("GenreList", GetGenres());
         }
     }
 }
