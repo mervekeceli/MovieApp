@@ -1,4 +1,5 @@
-﻿using MovieApp.Web.Validators;
+﻿using Microsoft.AspNetCore.Mvc;
+using MovieApp.Web.Validators;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -9,7 +10,8 @@ namespace MovieApp.Web.Model
         public int UserId { get; set; }
 
         [Required]
-        [StringLength(10, ErrorMessage ="Kullanıcı adı 10 karakterden fazla olamaz!")]
+        [StringLength(30, ErrorMessage ="Kullanıcı adı 30 karakterden fazla olamaz!")]
+        [Remote(action: "VerifyUserName", controller:"User")]
         public string UserName { get; set; }
 
         [Required]
